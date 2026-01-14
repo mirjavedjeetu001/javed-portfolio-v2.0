@@ -360,7 +360,7 @@
             </nav>
             
             <!-- Social Links -->
-            @if($about)
+            @if($about && ($about->facebook || $about->twitter || $about->linkedin || $about->github || $about->instagram || $about->youtube))
             <div class="mt-8 pt-6 border-t border-white/20">
                 <p class="text-white text-sm font-semibold mb-4">Connect With Me</p>
                 <div class="flex justify-center space-x-4">
@@ -429,45 +429,40 @@
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">{{ $about->name ?? 'Your Name' }}</h1>
                 <p class="text-xl sm:text-2xl md:text-3xl mb-8 font-light">{{ $about->title ?? 'Your Title' }}</p>
                 
+                @if($about && ($about->facebook || $about->twitter || $about->linkedin || $about->github || $about->instagram || $about->youtube))
                 <div class="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8">
-                    @if($about)
-                        @if($about->facebook)
-                            <a href="{{ $about->facebook }}" target="_blank" class="text-white hover:scale-110 transition transform" title="Facebook">
-                                <i class="fab fa-facebook text-3xl"></i>
-                            </a>
-                        @endif
-                        @if($about->twitter)
-                            <a href="{{ $about->twitter }}" target="_blank" class="text-white hover:scale-110 transition transform" title="Twitter">
-                                <i class="fab fa-twitter text-3xl"></i>
-                            </a>
-                        @endif
-                        @if($about->linkedin)
-                            <a href="{{ $about->linkedin }}" target="_blank" class="text-white hover:scale-110 transition transform" title="LinkedIn">
-                                <i class="fab fa-linkedin text-3xl"></i>
-                            </a>
-                        @endif
-                        @if($about->github)
-                            <a href="{{ $about->github }}" target="_blank" class="text-white hover:scale-110 transition transform" title="GitHub">
-                                <i class="fab fa-github text-3xl"></i>
-                            </a>
-                        @endif
-                        @if($about->instagram)
-                            <a href="{{ $about->instagram }}" target="_blank" class="text-white hover:scale-110 transition transform" title="Instagram">
-                                <i class="fab fa-instagram text-3xl"></i>
-                            </a>
-                        @endif
-                        @if($about->youtube)
-                            <a href="{{ $about->youtube }}" target="_blank" class="text-white hover:scale-110 transition transform" title="YouTube">
-                                <i class="fab fa-youtube text-3xl"></i>
-                            </a>
-                        @endif
-                    @endif
-                    @foreach($socialLinks as $link)
-                        <a href="{{ $link->url }}" target="_blank" class="text-white hover:scale-110 transition transform">
-                            <i class="{{ $link->icon ?? 'fas fa-link' }} text-3xl"></i>
+                    @if($about->facebook)
+                        <a href="{{ $about->facebook }}" target="_blank" class="text-white hover:scale-110 transition transform" title="Facebook">
+                            <i class="fab fa-facebook text-3xl"></i>
                         </a>
-                    @endforeach
+                    @endif
+                    @if($about->twitter)
+                        <a href="{{ $about->twitter }}" target="_blank" class="text-white hover:scale-110 transition transform" title="Twitter">
+                            <i class="fab fa-twitter text-3xl"></i>
+                        </a>
+                    @endif
+                    @if($about->linkedin)
+                        <a href="{{ $about->linkedin }}" target="_blank" class="text-white hover:scale-110 transition transform" title="LinkedIn">
+                            <i class="fab fa-linkedin text-3xl"></i>
+                        </a>
+                    @endif
+                    @if($about->github)
+                        <a href="{{ $about->github }}" target="_blank" class="text-white hover:scale-110 transition transform" title="GitHub">
+                            <i class="fab fa-github text-3xl"></i>
+                        </a>
+                    @endif
+                    @if($about->instagram)
+                        <a href="{{ $about->instagram }}" target="_blank" class="text-white hover:scale-110 transition transform" title="Instagram">
+                            <i class="fab fa-instagram text-3xl"></i>
+                        </a>
+                    @endif
+                    @if($about->youtube)
+                        <a href="{{ $about->youtube }}" target="_blank" class="text-white hover:scale-110 transition transform" title="YouTube">
+                            <i class="fab fa-youtube text-3xl"></i>
+                        </a>
+                    @endif
                 </div>
+                @endif
                 
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="#contact" class="bg-white text-blue-600 px-6 sm:px-8 py-3 rounded-full font-semibold hover:shadow-lg transition text-center">
@@ -1111,13 +1106,40 @@
     <footer class="bg-gray-900 text-white py-6 sm:py-8">
         <div class="container mx-auto px-4 sm:px-6 text-center">
             <p class="text-sm sm:text-base">&copy; {{ date('Y') }} {{ $about->name ?? 'Portfolio' }}. All Rights Reserved.</p>
+            @if($about && ($about->facebook || $about->twitter || $about->linkedin || $about->github || $about->instagram || $about->youtube))
             <div class="flex justify-center flex-wrap space-x-4 sm:space-x-6 mt-4">
-                @foreach($socialLinks as $link)
-                    <a href="{{ $link->url }}" target="_blank" class="text-white hover:text-primary transition">
-                        <i class="{{ $link->icon ?? 'fas fa-link' }} text-xl"></i>
+                @if($about->facebook)
+                    <a href="{{ $about->facebook }}" target="_blank" class="text-white hover:text-primary transition" title="Facebook">
+                        <i class="fab fa-facebook text-xl"></i>
                     </a>
-                @endforeach
+                @endif
+                @if($about->twitter)
+                    <a href="{{ $about->twitter }}" target="_blank" class="text-white hover:text-primary transition" title="Twitter">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                @endif
+                @if($about->linkedin)
+                    <a href="{{ $about->linkedin }}" target="_blank" class="text-white hover:text-primary transition" title="LinkedIn">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                @endif
+                @if($about->github)
+                    <a href="{{ $about->github }}" target="_blank" class="text-white hover:text-primary transition" title="GitHub">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                @endif
+                @if($about->instagram)
+                    <a href="{{ $about->instagram }}" target="_blank" class="text-white hover:text-primary transition" title="Instagram">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                @endif
+                @if($about->youtube)
+                    <a href="{{ $about->youtube }}" target="_blank" class="text-white hover:text-primary transition" title="YouTube">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                @endif
             </div>
+            @endif
         </div>
     </footer>
 

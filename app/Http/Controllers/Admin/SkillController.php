@@ -31,7 +31,23 @@ class SkillController extends AdminController
             'icon' => 'nullable|string|max:255',
         ]);
 
-        Skill::create($validated);
+        // Map category_id to skill_category_id for database
+        $data = [
+            'skill_category_id' => $validated['category_id'],
+            'name' => $validated['name'],
+            'percentage' => $validated['percentage'],
+            'order' => Skill::where('skill_category_id', $validated['category_id'])->max('order') + 1,
+        ];
+        
+        // Only add these fields if they exist in the database
+        if (isset($validated['years_experience'])) {
+            $data['years_experience'] = $validated['years_experience'];
+        }
+        if (isset($validated['icon'])) {
+            $data['icon'] = $validated['icon'];
+        }
+
+        Skill::create($data);
 
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill added successfully!');
@@ -53,7 +69,22 @@ class SkillController extends AdminController
             'icon' => 'nullable|string|max:255',
         ]);
 
-        $skill->update($validated);
+        // Map category_id to skill_category_id for database
+        $data = [
+            'skill_category_id' => $validated['category_id'],
+            'name' => $validated['name'],
+            'percentage' => $validated['percentage'],
+        ];
+        
+        // Only add these fields if they exist in the database
+        if (isset($validated['years_experience'])) {
+            $data['years_experience'] = $validated['years_experience'];
+        }
+        if (isset($validated['icon'])) {
+            $data['icon'] = $validated['icon'];
+        }
+
+        $skill->update($data);
 
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill updated successfully!');
