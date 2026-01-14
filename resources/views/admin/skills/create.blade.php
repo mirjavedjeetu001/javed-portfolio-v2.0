@@ -71,21 +71,21 @@
                 </div>
 
                 <div class="mb-6">
-                    <label for="proficiency" class="block text-sm font-bold text-gray-700 mb-2">
-                        <i class="fas fa-chart-line text-green-600 mr-2"></i>Proficiency Level * (0-100)
+                    <label for="percentage" class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fas fa-chart-line text-green-600 mr-2"></i>Percentage Level * (0-100)
                     </label>
                     <input type="range" 
                            class="w-full h-3 bg-green-100 rounded-lg appearance-none cursor-pointer" 
-                           id="proficiency" 
-                           name="proficiency" 
+                           id="percentage" 
+                           name="percentage" 
                            min="0" 
                            max="100" 
-                           value="{{ old('proficiency', 50) }}" 
-                           oninput="document.getElementById('proficiencyValue').textContent = this.value + '%'">
+                           value="{{ old('percentage', 50) }}" 
+                           oninput="document.getElementById('percentageValue').textContent = this.value + '%'">
                     <div class="text-center mt-3">
-                        <span class="inline-block bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-2 rounded-xl font-bold text-lg" id="proficiencyValue">{{ old('proficiency', 50) }}%</span>
+                        <span class="inline-block bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-2 rounded-xl font-bold text-lg" id="percentageValue">{{ old('percentage', 50) }}%</span>
                     </div>
-                    @error('proficiency')
+                    @error('percentage')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>

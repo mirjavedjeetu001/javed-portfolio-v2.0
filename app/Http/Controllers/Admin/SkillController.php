@@ -26,7 +26,7 @@ class SkillController extends AdminController
         $validated = $request->validate([
             'category_id' => 'required|exists:skill_categories,id',
             'name' => 'required|string|max:255',
-            'proficiency' => 'required|integer|min:0|max:100',
+            'percentage' => 'required|integer|min:0|max:100',
             'years_experience' => 'nullable|integer|min:0',
             'icon' => 'nullable|string|max:255',
         ]);
@@ -48,7 +48,7 @@ class SkillController extends AdminController
         $validated = $request->validate([
             'category_id' => 'required|exists:skill_categories,id',
             'name' => 'required|string|max:255',
-            'proficiency' => 'required|integer|min:0|max:100',
+            'percentage' => 'required|integer|min:0|max:100',
             'years_experience' => 'nullable|integer|min:0',
             'icon' => 'nullable|string|max:255',
         ]);

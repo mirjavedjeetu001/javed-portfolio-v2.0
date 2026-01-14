@@ -24,12 +24,20 @@ Route::get('/', [PortfolioController::class, 'index'])->name('home');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/download-resume', [PortfolioController::class, 'downloadResume'])->name('download.resume');
 
+// Blog Routes
+Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/category/{slug}', [\App\Http\Controllers\BlogController::class, 'category'])->name('blog.category');
+Route::get('/blog/{slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
+Route::post('/blog/{blog}/like', [\App\Http\Controllers\BlogController::class, 'like'])->name('blog.like');
+Route::post('/blog/{blog}/comment', [\App\Http\Controllers\BlogController::class, 'comment'])->name('blog.comment');
+
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
     
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/reset-data', [DashboardController::class, 'resetData'])->name('reset-data');
+    Route::post('/reset-blog-data', [DashboardController::class, 'resetBlogData'])->name('reset-blog-data');
     
     // About Management
     Route::resource('about', AboutController::class)->except(['show']);
@@ -97,5 +105,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{user}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('update');
         Route::delete('/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('destroy');
     });
+    
+    // Blog Management
+    Route::resource('blog-categories', \App\Http\Controllers\Admin\BlogCategoryController::class);
+    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
+    Route::post('blogs/{blog}/toggle-featured', [\App\Http\Controllers\Admin\BlogController::class, 'toggleFeatured'])->name('blogs.toggle-featured');
+    Route::post('blogs/{blog}/toggle-publish', [\App\Http\Controllers\Admin\BlogController::class, 'togglePublish'])->name('blogs.toggle-publish');
+    Route::get('blog-comments', [\App\Http\Controllers\Admin\BlogController::class, 'comments'])->name('blog-comments.index');
+    Route::post('blog-comments/{comment}/approve', [\App\Http\Controllers\Admin\BlogController::class, 'approveComment'])->name('blog-comments.approve');
+    Route::delete('blog-comments/{comment}', [\App\Http\Controllers\Admin\BlogController::class, 'deleteComment'])->name('blog-comments.destroy');
+    
+    // Database Management
+    Route::get('database', [\App\Http\Controllers\Admin\DatabaseController::class, 'index'])->name('database.index');
+    Route::get('database/export', [\App\Http\Controllers\Admin\DatabaseController::class, 'export'])->name('database.export');
+    Route::post('database/import', [\App\Http\Controllers\Admin\DatabaseController::class, 'import'])->name('database.import');
+    Route::post('database/restore/{filename}', [\App\Http\Controllers\Admin\DatabaseController::class, 'restore'])->name('database.restore');
+    Route::delete('database/delete/{filename}', [\App\Http\Controllers\Admin\DatabaseController::class, 'delete'])->name('database.delete');
 });
     

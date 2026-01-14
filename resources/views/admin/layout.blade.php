@@ -17,8 +17,16 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen overflow-hidden">
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 bg-gray-900 text-white p-3 rounded-lg shadow-lg">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+
+        <!-- Sidebar Overlay -->
+        <div id="sidebar-overlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30 hidden"></div>
+
         <!-- Sidebar -->
-        <aside class="w-64 bg-gray-900 text-white flex-shrink-0 overflow-y-auto">
+        <aside id="sidebar" class="w-64 bg-gray-900 text-white flex-shrink-0 overflow-y-auto fixed lg:relative h-full z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
             <div class="p-6">
                 <h1 class="text-2xl font-bold">Portfolio Admin</h1>
             </div>
@@ -63,6 +71,22 @@
                     <i class="fas fa-file-pdf mr-3"></i>
                     Resume / CV (AI)
                 </a>
+                
+                <!-- Blog Section -->
+                <div class="px-6 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Blog Management</div>
+                <a href="{{ route('admin.blog-categories.index') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.blog-categories.*') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fas fa-folder mr-3"></i>
+                    Blog Categories
+                </a>
+                <a href="{{ route('admin.blogs.index') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.blogs.*') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fas fa-blog mr-3"></i>
+                    Blog Posts
+                </a>
+                <a href="{{ route('admin.blog-comments.index') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.blog-comments.*') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fas fa-comments mr-3"></i>
+                    Blog Comments
+                </a>
+                
                 <a href="{{ route('admin.menu.index') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.menu.*') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
                     <i class="fas fa-bars mr-3"></i>
                     Menu Management
@@ -89,6 +113,10 @@
                     <i class="fas fa-cog mr-3"></i>
                     General Settings
                 </a>
+                <a href="{{ route('admin.database.index') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.database.*') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fas fa-database mr-3"></i>
+                    Database Backup
+                </a>
                 <a href="{{ route('home') }}" target="_blank" class="flex items-center px-6 py-3 hover:bg-gray-800 mt-4 border-t border-gray-700">
                     <i class="fas fa-external-link-alt mr-3"></i>
                     View Portfolio
@@ -97,15 +125,15 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex-1 flex flex-col overflow-hidden lg:ml-0">
             <!-- Top Bar -->
             <header class="bg-white shadow-sm z-10">
-                <div class="flex items-center justify-between px-6 py-4">
-                    <h2 class="text-2xl font-semibold text-gray-800">@yield('page-title', 'Dashboard')</h2>
-                    <div class="flex items-center space-x-4">
+                <div class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
+                    <h2 class="text-lg sm:text-2xl font-semibold text-gray-800 ml-12 lg:ml-0">@yield('page-title', 'Dashboard')</h2>
+                    <div class="flex items-center space-x-2 sm:space-x-4">
                         @if(auth()->check())
-                        <div class="flex items-center space-x-2">
-                            <span class="text-gray-600">{{ auth()->user()->name }}</span>
+                        <div class="hidden sm:flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">{{ auth()->user()->name }}</span>
                             @if(auth()->user()->isSuperAdmin())
                             <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Super Admin</span>
                             @else
@@ -114,13 +142,13 @@
                         </div>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
-                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">
-                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                            <button type="submit" class="bg-red-500 text-white px-3 sm:px-4 py-2 rounded hover:bg-red-600 transition duration-200 text-sm sm:text-base">
+                                <i class="fas fa-sign-out-alt sm:mr-2"></i><span class="hidden sm:inline">Logout</span>
                             </button>
                         </form>
                         @else
-                        <a href="{{ route('login') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        <a href="{{ route('login') }}" class="bg-blue-500 text-white px-3 sm:px-4 py-2 rounded hover:bg-blue-600 transition duration-200 text-sm sm:text-base">
+                            <i class="fas fa-sign-in-alt sm:mr-2"></i><span class="hidden sm:inline">Login</span>
                         </a>
                         @endif
                     </div>
@@ -128,7 +156,7 @@
             </header>
 
             <!-- Content Area -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-3 sm:p-6"
                 @if(session('success'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                         {{ session('success') }}
@@ -147,7 +175,7 @@
     </div>
 
     <!-- Premium Delete Confirmation Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4" style="backdrop-filter: blur(8px);">
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" style="backdrop-filter: blur(8px);">
         <div class="relative max-w-md w-full animate-modal-pop">
             <div class="absolute inset-0 bg-gradient-to-r from-red-400 to-pink-500 rounded-2xl transform scale-105 opacity-75 blur-xl"></div>
             <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -193,12 +221,16 @@
 
         function showDeleteModal(form) {
             deleteForm = form;
-            document.getElementById('deleteModal').classList.remove('hidden');
+            const modal = document.getElementById('deleteModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
             document.body.style.overflow = 'hidden';
         }
 
         function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.add('hidden');
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
             document.body.style.overflow = '';
             deleteForm = null;
         }
@@ -221,6 +253,29 @@
             if (e.target === this) {
                 closeDeleteModal();
             }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        mobileMenuBtn?.addEventListener('click', toggleSidebar);
+        sidebarOverlay?.addEventListener('click', toggleSidebar);
+
+        // Close sidebar on navigation (mobile)
+        document.querySelectorAll('#sidebar a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 1024) {
+                    toggleSidebar();
+                }
+            });
         });
     </script>
 

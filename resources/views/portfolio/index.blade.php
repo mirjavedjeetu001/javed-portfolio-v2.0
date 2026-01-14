@@ -477,12 +477,17 @@
                         $resumePath = $settings['resume_pdf_path'] ?? null;
                     @endphp
                     @if($resumePath)
-                        <a href="{{ route('download.resume') }}" class="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition text-center">
+                        <a href="{{ route('download.resume') }}" class="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-full font-semibold transition text-center hover:shadow-lg hover:scale-105">
                             <i class="fas fa-download mr-2"></i>Download Resume
                         </a>
                     @elseif($about && $about->cv_file)
-                        <a href="{{ asset('storage/' . $about->cv_file) }}" download class="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition text-center">
+                        <a href="{{ asset('storage/' . $about->cv_file) }}" download class="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-full font-semibold transition text-center hover:shadow-lg hover:scale-105">
                             <i class="fas fa-download mr-2"></i>Download Resume
+                        </a>
+                    @endif
+                    @if($latestBlogs && $latestBlogs->count() > 0)
+                        <a href="#blog" class="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-full font-semibold transition text-center hover:shadow-lg hover:scale-105">
+                            <i class="fas fa-blog mr-2"></i>Check My Blog
                         </a>
                     @endif
                 </div>
@@ -491,7 +496,7 @@
     </section>
 
     <!-- About Section -->
-    @if($about)
+    @if($about && (!isset($sectionVisibility['about']) || $sectionVisibility['about']))
     <section id="about" class="bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6">
             <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12">About Me</h2>
@@ -544,7 +549,7 @@
     @endif
 
     <!-- Experience Section -->
-    @if($experiences->count() > 0)
+    @if($experiences->count() > 0 && (!isset($sectionVisibility['experience']) || $sectionVisibility['experience']))
     <section id="experience" class="bg-gradient-to-br from-indigo-50 via-white to-pink-50 relative overflow-hidden">
         <div class="absolute inset-0 opacity-5">
             <div class="absolute top-20 right-20 w-96 h-96 bg-indigo-500 rounded-full filter blur-3xl animate-pulse"></div>
@@ -596,7 +601,7 @@
     @endif
 
     <!-- Education Section -->
-    @if($education->count() > 0)
+    @if($education->count() > 0 && (!isset($sectionVisibility['education']) || $sectionVisibility['education']))
     <section id="education" class="bg-gradient-to-br from-purple-50 via-white to-blue-50 relative overflow-hidden">
         <div class="absolute inset-0 opacity-5">
             <div class="absolute bottom-20 left-20 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
@@ -655,7 +660,7 @@
     @endif
 
     <!-- Certifications Section -->
-    @if($certifications->count() > 0)
+    @if($certifications->count() > 0 && (!isset($sectionVisibility['certifications']) || $sectionVisibility['certifications']))
     <section id="certifications" class="bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
         <div class="absolute inset-0 opacity-5">
             <div class="absolute top-10 left-10 w-72 h-72 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
@@ -727,7 +732,7 @@
     @endif
 
     <!-- Skills Section -->
-    @if($skillCategories->count() > 0)
+    @if($skillCategories->count() > 0 && (!isset($sectionVisibility['skills']) || $sectionVisibility['skills']))
     <section id="skills" class="bg-gradient-to-br from-green-50 via-white to-teal-50 relative overflow-hidden">
         <div class="absolute inset-0 opacity-5">
             <div class="absolute top-10 right-10 w-72 h-72 bg-green-500 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 0.5s;"></div>
@@ -775,7 +780,7 @@
     @endif
 
     <!-- Projects Section -->
-    @if($projects->count() > 0)
+    @if($projects->count() > 0 && (!isset($sectionVisibility['projects']) || $sectionVisibility['projects']))
     <section id="projects" class="bg-gradient-to-br from-orange-50 via-white to-red-50 relative overflow-hidden">
         <div class="absolute inset-0 opacity-5">
             <div class="absolute top-20 left-20 w-96 h-96 bg-orange-500 rounded-full filter blur-3xl animate-pulse"></div>
@@ -895,7 +900,7 @@
     @endif
 
     <!-- Awards Section -->
-    @if($awards->count() > 0)
+    @if($awards->count() > 0 && (!isset($sectionVisibility['awards']) || $sectionVisibility['awards']))
     <section id="awards" class="bg-gray-50">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Awards & Honors</h2>
@@ -930,7 +935,7 @@
     @endif
 
     <!-- Activities Section -->
-    @if($activities->count() > 0)
+    @if($activities->count() > 0 && (!isset($sectionVisibility['activities']) || $sectionVisibility['activities']))
     <section id="activities" class="bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Activities & Volunteer Work</h2>
@@ -970,6 +975,75 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
+    <!-- Blog Section -->
+    @if($latestBlogs && $latestBlogs->count() > 0 && (!isset($sectionVisibility['blog']) || $sectionVisibility['blog']))
+    <section id="blog" class="min-h-screen flex items-center py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+                    <i class="fas fa-blog mr-3"></i>Latest Blog Posts
+                </h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Insights, tutorials, and thoughts from my latest articles
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12" data-aos="fade-up" data-aos-delay="200">
+                @foreach($latestBlogs as $blog)
+                    <a href="{{ route('blog.show', $blog->slug) }}" class="group">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full flex flex-col">
+                            @if($blog->featured_image)
+                                <div class="h-56 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $blog->featured_image) }}" 
+                                         alt="{{ $blog->title }}" 
+                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                </div>
+                            @else
+                                <div class="h-56 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                    <i class="fas fa-blog text-8xl text-white/30"></i>
+                                </div>
+                            @endif
+                            
+                            <div class="p-6 flex-1 flex flex-col">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="text-xs font-semibold px-3 py-1 rounded-full" 
+                                          style="background: {{ $blog->category->color }}20; color: {{ $blog->category->color }}">
+                                        <i class="{{ $blog->category->icon }} mr-1"></i>{{ $blog->category->name }}
+                                    </span>
+                                    <span class="text-xs text-gray-500">
+                                        <i class="far fa-calendar mr-1"></i>{{ $blog->published_at->format('M d, Y') }}
+                                    </span>
+                                </div>
+                                
+                                <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition line-clamp-2">
+                                    {{ $blog->title }}
+                                </h3>
+                                
+                                <p class="text-gray-600 text-sm mb-4 flex-1 line-clamp-3">
+                                    {{ Str::limit(strip_tags($blog->content), 120) }}
+                                </p>
+                                
+                                <div class="flex items-center justify-between text-sm text-gray-500 pt-4 border-t">
+                                    <span><i class="fas fa-eye mr-1"></i>{{ $blog->views }}</span>
+                                    <span><i class="fas fa-heart mr-1"></i>{{ $blog->likes_count }}</span>
+                                    <span><i class="fas fa-comments mr-1"></i>{{ $blog->comments_count }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+
+            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                <a href="/blog" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                    <span>View All Blog Posts</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -1086,7 +1160,8 @@
         
         // Animate skill bars
         const observerOptions = {
-            threshold: 0.5
+            threshold: 0.3,
+            rootMargin: '0px'
         };
         
         const observer = new IntersectionObserver((entries) => {
@@ -1095,15 +1170,20 @@
                     const skillBars = entry.target.querySelectorAll('.skill-bar');
                     skillBars.forEach(bar => {
                         const width = bar.getAttribute('data-width');
-                        bar.style.width = width + '%';
+                        setTimeout(() => {
+                            bar.style.width = width + '%';
+                        }, 100);
                     });
+                    // Unobserve after animation
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
         
-        document.querySelectorAll('#skills').forEach(section => {
-            observer.observe(section);
-        });
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
         
         // Mobile Menu Toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');

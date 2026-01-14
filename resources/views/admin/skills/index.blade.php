@@ -54,11 +54,11 @@
                                 
                                 <div class="mb-4 flex-grow">
                                     <div class="flex justify-between mb-2">
-                                        <span class="text-sm text-gray-600 font-semibold">Proficiency</span>
-                                        <span class="text-sm text-green-700 font-bold">{{ $skill->proficiency }}%</span>
+                                        <span class="text-sm text-gray-600 font-semibold">Percentage</span>
+                                        <span class="text-sm text-green-700 font-bold">{{ $skill->percentage }}%</span>
                                     </div>
-                                    <div class="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-                                        <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full transition-all duration-500" style="width: {{ $skill->proficiency }}%;"></div>
+                                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full transition-all duration-500" style="width: {{ $skill->percentage }}%;"></div>
                                     </div>
                                 </div>
                                 

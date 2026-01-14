@@ -12,13 +12,12 @@ use App\Models\Certification;
 use App\Models\Award;
 use App\Models\Activity;
 use App\Models\Entrepreneurship;
-use App\Models\BlogPost;
-use App\Models\GalleryCategory;
-use App\Models\GalleryImage;
+use App\Models\Blog;
 use App\Models\SocialLink;
 use App\Models\ThemeSetting;
 use App\Models\Setting;
 use App\Models\MenuItem;
+use App\Models\SectionVisibility;
 
 class PortfolioController extends Controller
 {
@@ -34,17 +33,17 @@ class PortfolioController extends Controller
         $awards = Award::orderBy('date', 'desc')->get();
         $activities = Activity::orderBy('start_date', 'desc')->get();
         $entrepreneurships = Entrepreneurship::orderBy('order')->get();
-        $blogPosts = BlogPost::where('is_published', true)->latest('published_at')->take(6)->get();
-        $galleryImages = GalleryImage::with('category')->orderBy('order')->take(12)->get();
+        $latestBlogs = Blog::with('category')->where('is_published', true)->latest('published_at')->take(3)->get();
         $socialLinks = SocialLink::where('is_active', true)->orderBy('order')->get();
         $theme = ThemeSetting::first();
         $settings = Setting::pluck('value', 'key');
         $menuItems = MenuItem::where('is_visible', true)->orderBy('order')->get();
+        $sectionVisibility = SectionVisibility::pluck('is_visible', 'section_id');
 
         return view('portfolio.index', compact(
             'about', 'experiences', 'skillCategories', 'projects', 'featuredProjects',
             'education', 'certifications', 'awards', 'activities', 'entrepreneurships',
-            'blogPosts', 'galleryImages', 'socialLinks', 'theme', 'settings', 'menuItems'
+            'latestBlogs', 'socialLinks', 'theme', 'settings', 'menuItems', 'sectionVisibility'
         ));
     }
     

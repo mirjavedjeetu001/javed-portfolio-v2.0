@@ -5,31 +5,41 @@
 
 @section('content')
 <!-- Page Header -->
-<div class="mb-8">
-    <h1 class="text-4xl font-bold text-gray-800 flex items-center">
-        <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mr-4">
-            <i class="fas fa-tachometer-alt text-white text-2xl"></i>
+<div class="mb-6 sm:mb-8">
+    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 flex items-center">
+        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+            <i class="fas fa-tachometer-alt text-white text-lg sm:text-2xl"></i>
         </div>
         Dashboard
     </h1>
-    <p class="text-gray-600 mt-2 ml-18">Welcome back! Here's your portfolio overview</p>
+    <p class="text-sm sm:text-base text-gray-600 mt-2 ml-13 sm:ml-18">Welcome back! Here's your portfolio overview</p>
 </div>
 
-<!-- Reset Data Button -->
-<div class="mb-6">
+<!-- Reset Data Buttons -->
+<div class="mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
     <form action="{{ route('admin.reset-data') }}" method="POST" onsubmit="return confirm('⚠️ WARNING: This will permanently delete ALL portfolio data (Experiences, Education, Skills, Projects, Certifications, Awards, Activities). This cannot be undone! Are you absolutely sure?');">
         @csrf
-        <button type="submit" class="group relative">
+        <button type="submit" class="group relative w-full sm:w-auto">
             <div class="absolute inset-0 bg-gradient-to-r from-red-600 to-pink-600 rounded-xl blur group-hover:blur-lg transition"></div>
-            <div class="relative bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white px-6 py-3 rounded-xl transition flex items-center font-semibold">
-                <i class="fas fa-trash-alt mr-2"></i>Reset All Portfolio Data
+            <div class="relative bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl transition flex items-center justify-center font-semibold text-sm sm:text-base">
+                <i class="fas fa-trash-alt mr-2"></i><span class="hidden sm:inline">Reset All Portfolio Data</span><span class="sm:hidden">Reset Portfolio</span>
+            </div>
+        </button>
+    </form>
+    
+    <form action="{{ route('admin.reset-blog-data') }}" method="POST" onsubmit="return confirm('⚠️ WARNING: This will permanently delete ALL blog data (Blog Posts, Categories, Comments, Likes). This cannot be undone! Are you absolutely sure?');">
+        @csrf
+        <button type="submit" class="group relative w-full sm:w-auto">
+            <div class="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 rounded-xl blur group-hover:blur-lg transition"></div>
+            <div class="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl transition flex items-center justify-center font-semibold text-sm sm:text-base">
+                <i class="fas fa-blog mr-2"></i><span class="hidden sm:inline">Reset All Blog Data</span><span class="sm:hidden">Reset Blog</span>
             </div>
         </button>
     </form>
 </div>
 
 <!-- Stats Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8"
     <!-- Experience Card -->
     <div class="group relative">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-2xl transform group-hover:scale-105 transition duration-500 opacity-75 blur"></div>
@@ -101,7 +111,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-500 text-sm font-semibold uppercase tracking-wide mb-2">Blog Posts</p>
-                    <p class="text-4xl font-bold text-gray-800">{{ $stats['blog_posts'] }}</p>
+                    <p class="text-4xl font-bold text-gray-800">{{ $stats['blogs'] }}</p>
                 </div>
                 <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-rose-500 rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition duration-500">
                     <i class="fas fa-blog text-white text-2xl"></i>
