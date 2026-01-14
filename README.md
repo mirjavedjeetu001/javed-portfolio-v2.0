@@ -371,6 +371,72 @@ If you find a bug or have a feature request, please open an issue on GitHub with
 - Expected behavior
 - Screenshots (if applicable)
 
+## � cPanel Deployment
+
+### 🚀 Quick Deploy
+
+Ready to go live? We've got you covered with comprehensive deployment tools!
+
+**1. Prepare Your Project**
+```bash
+./prepare-deployment.sh
+```
+
+**2. Follow Interactive Guide**
+- Open `deployment-checklist.html` in your browser
+- Complete all 40 steps with progress tracking
+- Automatic progress saving
+
+**3. Complete Documentation**
+- 📖 **[Full Deployment Guide](CPANEL_DEPLOYMENT_GUIDE.md)** - Complete step-by-step instructions (13,000+ words)
+- ⚡ **[Quick Reference Card](DEPLOYMENT_QUICKSTART.md)** - Essential commands and troubleshooting
+- ✅ **[Interactive Checklist](deployment-checklist.html)** - Visual progress tracker
+- 🔧 **[Installation Helper](public/install-helper.php)** - Browser-based setup tool
+
+### Deployment Process Overview
+
+1. **Local Preparation** (5 minutes)
+   - Run preparation script
+   - Export database
+   - Create deployment package
+
+2. **cPanel Setup** (10 minutes)
+   - Create MySQL database
+   - Upload files
+   - Configure document root
+
+3. **Laravel Configuration** (5 minutes)
+   - Generate APP_KEY
+   - Create storage link
+   - Set file permissions
+
+4. **Go Live!** (5 minutes)
+   - Install SSL certificate
+   - Test all features
+   - Delete helper files
+
+**Total Time:** ~25-30 minutes from start to live!
+
+### What's Included?
+
+- ✅ Automated preparation script
+- ✅ 40-step interactive checklist with progress tracking
+- ✅ Complete deployment guide (13,000+ words)
+- ✅ Quick reference card
+- ✅ Browser-based installation helper
+- ✅ Troubleshooting guide
+- ✅ Security checklist
+- ✅ .htaccess templates
+- ✅ cPanel configuration guide
+
+### Need Help?
+
+All deployment documentation is included:
+- Check `CPANEL_DEPLOYMENT_GUIDE.md` for detailed instructions
+- Use `deployment-checklist.html` to track progress
+- Run `install-helper.php` for automated checks
+- See `DEPLOYMENT_QUICKSTART.md` for quick reference
+
 ## 📞 Support
 
 For support, contact the developer through GitHub.
@@ -388,3 +454,5 @@ For support, contact the developer through GitHub.
 **Made with ❤️ by Mir Javed Jahanger**
 
 ⭐ Star this repository if you find it helpful!
+
+**Ready to deploy?** → `./prepare-deployment.sh`

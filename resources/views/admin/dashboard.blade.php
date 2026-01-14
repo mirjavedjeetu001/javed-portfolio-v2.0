@@ -39,7 +39,7 @@
 </div>
 
 <!-- Stats Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8"
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
     <!-- Experience Card -->
     <div class="group relative">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-2xl transform group-hover:scale-105 transition duration-500 opacity-75 blur"></div>

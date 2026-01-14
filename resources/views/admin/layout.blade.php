@@ -17,16 +17,8 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen overflow-hidden">
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 bg-gray-900 text-white p-3 rounded-lg shadow-lg">
-            <i class="fas fa-bars text-xl"></i>
-        </button>
-
-        <!-- Sidebar Overlay -->
-        <div id="sidebar-overlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30 hidden"></div>
-
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 bg-gray-900 text-white flex-shrink-0 overflow-y-auto fixed lg:relative h-full z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+        <aside id="sidebar" class="w-64 bg-gray-900 text-white flex-shrink-0 overflow-y-auto h-full">
             <div class="p-6">
                 <h1 class="text-2xl font-bold">Portfolio Admin</h1>
             </div>
@@ -125,14 +117,14 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden lg:ml-0">
+        <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Top Bar -->
             <header class="bg-white shadow-sm z-10">
-                <div class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
-                    <h2 class="text-lg sm:text-2xl font-semibold text-gray-800 ml-12 lg:ml-0">@yield('page-title', 'Dashboard')</h2>
-                    <div class="flex items-center space-x-2 sm:space-x-4">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <h2 class="text-2xl font-semibold text-gray-800">@yield('page-title', 'Dashboard')</h2>
+                    <div class="flex items-center space-x-4">
                         @if(auth()->check())
-                        <div class="hidden sm:flex items-center space-x-2">
+                        <div class="flex items-center space-x-2">
                             <span class="text-sm text-gray-600">{{ auth()->user()->name }}</span>
                             @if(auth()->user()->isSuperAdmin())
                             <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Super Admin</span>
@@ -142,13 +134,13 @@
                         </div>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
-                            <button type="submit" class="bg-red-500 text-white px-3 sm:px-4 py-2 rounded hover:bg-red-600 transition duration-200 text-sm sm:text-base">
-                                <i class="fas fa-sign-out-alt sm:mr-2"></i><span class="hidden sm:inline">Logout</span>
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
                             </button>
                         </form>
                         @else
-                        <a href="{{ route('login') }}" class="bg-blue-500 text-white px-3 sm:px-4 py-2 rounded hover:bg-blue-600 transition duration-200 text-sm sm:text-base">
-                            <i class="fas fa-sign-in-alt sm:mr-2"></i><span class="hidden sm:inline">Login</span>
+                        <a href="{{ route('login') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
                         </a>
                         @endif
                     </div>
@@ -156,7 +148,7 @@
             </header>
 
             <!-- Content Area -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-3 sm:p-6"
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
                 @if(session('success'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                         {{ session('success') }}
@@ -253,29 +245,6 @@
             if (e.target === this) {
                 closeDeleteModal();
             }
-        });
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-        function toggleSidebar() {
-            sidebar.classList.toggle('-translate-x-full');
-            sidebarOverlay.classList.toggle('hidden');
-            document.body.classList.toggle('overflow-hidden');
-        }
-
-        mobileMenuBtn?.addEventListener('click', toggleSidebar);
-        sidebarOverlay?.addEventListener('click', toggleSidebar);
-
-        // Close sidebar on navigation (mobile)
-        document.querySelectorAll('#sidebar a').forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth < 1024) {
-                    toggleSidebar();
-                }
-            });
         });
     </script>
 
