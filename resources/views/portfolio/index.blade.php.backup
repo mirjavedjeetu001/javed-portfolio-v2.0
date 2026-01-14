@@ -790,14 +790,8 @@
                 <p class="text-gray-600 text-base sm:text-lg">Transforming ideas into impactful digital solutions</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8" id="projects-grid">
-                @php
-                    // Show featured projects first (max 3), then all other projects
-                    $visibleProjects = $featuredProjects->count() > 0 ? $featuredProjects : $projects->take(3);
-                    $hiddenProjects = $projects->diff($visibleProjects);
-                @endphp
-                
-                @foreach($visibleProjects as $project)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+                @foreach($projects as $project)
                     <div class="group relative will-change-transform">
                         <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl transform group-hover:scale-105 transition-transform duration-300 opacity-75 blur"></div>
                         <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 transform group-hover:-translate-y-2">
@@ -838,58 +832,7 @@
                         </div>
                     </div>
                 @endforeach
-                
-                @foreach($hiddenProjects as $project)
-                    <div class="group relative will-change-transform project-item hidden" data-hidden-project>
-                        <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl transform group-hover:scale-105 transition-transform duration-300 opacity-75 blur"></div>
-                        <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 transform group-hover:-translate-y-2">
-                            @if($project->image)
-                                <div class="relative overflow-hidden h-56">
-                                    <img 
-                                        src="{{ asset('storage/' . $project->image) }}" 
-                                        alt="{{ $project->title }}" 
-                                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                                        loading="lazy"
-                                    >
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-                            @else
-                                <div class="w-full h-56 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center relative overflow-hidden">
-                                    <i class="fas fa-project-diagram text-white text-6xl transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500"></i>
-                                </div>
-                            @endif
-                            
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2 group-hover:text-orange-600 transition-colors duration-200">{{ $project->title }}</h3>
-                                <p class="text-gray-600 mb-4 leading-relaxed line-clamp-3">{{ Str::limit($project->description, 100) }}</p>
-                                
-                                @if($project->technologies)
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        @foreach(is_array($project->technologies) ? $project->technologies : json_decode($project->technologies) as $tech)
-                                            <span class="bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">{{ $tech }}</span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                                
-                                @if($project->url)
-                                    <a href="{{ $project->url }}" target="_blank" class="inline-flex items-center text-white bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 px-4 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
-                                        <i class="fas fa-external-link-alt mr-2"></i>View Project
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
             </div>
-            
-            @if($projects->count() > 3)
-            <div class="text-center mt-8 sm:mt-12">
-                <button id="show-all-projects" class="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:from-orange-600 hover:to-red-700 transform hover:scale-105 transition-all duration-300">
-                    <span id="show-all-text">Show All Projects</span>
-                    <i class="fas fa-arrow-down ml-2" id="show-all-icon"></i>
-                </button>
-            </div>
-            @endif
         </div>
     </section>
     @endif
@@ -1173,43 +1116,6 @@
                 behavior: 'smooth'
             });
         });
-
-        // Show All Projects Button
-        const showAllButton = document.getElementById('show-all-projects');
-        const hiddenProjects = document.querySelectorAll('[data-hidden-project]');
-        let allProjectsVisible = false;
-
-        if (showAllButton) {
-            showAllButton.addEventListener('click', function() {
-                allProjectsVisible = !allProjectsVisible;
-                const buttonText = document.getElementById('show-all-text');
-                const buttonIcon = document.getElementById('show-all-icon');
-                
-                if (allProjectsVisible) {
-                    // Show all projects
-                    hiddenProjects.forEach((project, index) => {
-                        setTimeout(() => {
-                            project.classList.remove('hidden');
-                            project.style.animation = 'fadeIn 0.5s ease-in-out';
-                        }, index * 100);
-                    });
-                    buttonText.textContent = 'Show Less';
-                    buttonIcon.classList.remove('fa-arrow-down');
-                    buttonIcon.classList.add('fa-arrow-up');
-                } else {
-                    // Hide extra projects
-                    hiddenProjects.forEach(project => {
-                        project.classList.add('hidden');
-                    });
-                    buttonText.textContent = 'Show All Projects';
-                    buttonIcon.classList.remove('fa-arrow-up');
-                    buttonIcon.classList.add('fa-arrow-down');
-                    
-                    // Scroll to projects section
-                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        }
     </script>
 </body>
 </html>

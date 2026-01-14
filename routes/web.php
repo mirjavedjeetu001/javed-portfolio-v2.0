@@ -45,6 +45,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('skills/reorder', [SkillController::class, 'reorder'])->name('skills.reorder');
     
     // Projects Management
+    Route::post('projects/{project}/toggle-featured', [ProjectController::class, 'toggleFeatured'])->name('projects.toggle-featured');
     Route::resource('projects', ProjectController::class);
     
     // Certifications Management

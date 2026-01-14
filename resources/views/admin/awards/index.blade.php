@@ -24,7 +24,7 @@
                             <p class="text-gray-700 font-medium mb-1">{{ $award->organization }}</p>
                             <div class="flex items-center text-sm text-gray-600 mb-3">
                                 <i class="fas fa-calendar-alt text-gray-400 mr-2"></i>
-                                <span>{{ \Carbon\Carbon::parse($award->date)->format('F d, Y') }}</span>
+                                <span>{{ $award->date->format('F d, Y') }}</span>
                             </div>
                             @if($award->description)
                                 <p class="text-gray-600 text-sm bg-white/50 p-3 rounded">{{ $award->description }}</p>
@@ -32,8 +32,8 @@
                         </div>
                     </div>
                     
-                    <div class="flex justify-end pt-4 border-t border-yellow-200">
-                        <form action="{{ route('admin.awards.destroy', $award) }}" method="POST" onsubmit="return confirm('Delete this award?');">
+                    <div class="flex justify-end gap-2 pt-4 border-t border-yellow-200">
+                        <form action="{{ route('admin.awards.destroy', $award) }}" method="POST" onsubmit="event.preventDefault(); showDeleteModal(this);">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm transition">

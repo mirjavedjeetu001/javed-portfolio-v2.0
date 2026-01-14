@@ -66,7 +66,7 @@
                                     <a href="{{ route('admin.skills.edit', $skill) }}" class="flex-1 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 text-green-700 px-4 py-2 rounded-lg transition text-center font-semibold border-2 border-green-200 hover:border-green-400">
                                         <i class="fas fa-edit mr-1"></i>Edit
                                     </a>
-                                    <form action="{{ route('admin.skills.destroy', $skill) }}" method="POST" class="flex-1" onsubmit="return confirm('Are you sure you want to delete this skill?');">
+                                    <form action="{{ route('admin.skills.destroy', $skill) }}" method="POST" class="flex-1" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="w-full bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 text-red-700 px-4 py-2 rounded-lg transition font-semibold border-2 border-red-200 hover:border-red-400">

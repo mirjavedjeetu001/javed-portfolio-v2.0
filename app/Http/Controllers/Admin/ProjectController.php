@@ -98,4 +98,27 @@ class ProjectController extends AdminController
         return redirect()->route('admin.projects.index')
             ->with('success', 'Project deleted successfully!');
     }
+
+    public function toggleFeatured(Request $request, Project $project)
+    {
+        // Check if trying to feature a project
+        if (!$project->is_featured) {
+            // Count currently featured projects
+            $featuredCount = Project::where('is_featured', true)->count();
+            
+            if ($featuredCount >= 3) {
+                return back()->with('error', 'You can only feature 3 projects at a time. Please unfeature another project first.');
+            }
+        }
+        
+        // Toggle featured status
+        $project->is_featured = !$project->is_featured;
+        $project->save();
+        
+        $message = $project->is_featured 
+            ? 'Project featured successfully!' 
+            : 'Project unfeatured successfully!';
+        
+        return back()->with('success', $message);
+    }
 }

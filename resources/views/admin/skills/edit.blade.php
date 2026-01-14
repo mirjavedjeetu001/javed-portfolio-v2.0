@@ -3,99 +3,149 @@
 @section('title', 'Edit Skill')
 
 @section('content')
-<div class="container-fluid">
-    <div class="mb-4">
-        <h1 class="h3">Edit Skill</h1>
-        <p class="text-muted">Update skill details</p>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('admin.skills.update', $skill) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        
-                        <div class="mb-3">
-                            <label for="category_id" class="form-label">Category *</label>
-                            <select class="form-select @error('category_id') is-invalid @enderror" 
-                                    id="category_id" name="category_id" required>
-                                <option value="">Select a category</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" 
-                                            {{ old('category_id', $skill->category_id) == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Skill Name *</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" name="name" value="{{ old('name', $skill->name) }}" required
-                                   placeholder="e.g., JavaScript, Project Management, etc.">
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="proficiency" class="form-label">Proficiency Level * (0-100)</label>
-                            <input type="range" class="form-range" id="proficiency" name="proficiency" 
-                                   min="0" max="100" value="{{ old('proficiency', $skill->proficiency) }}" 
-                                   oninput="document.getElementById('proficiencyValue').textContent = this.value + '%'">
-                            <div class="text-center mt-2">
-                                <span class="badge bg-primary fs-5" id="proficiencyValue">{{ old('proficiency', $skill->proficiency) }}%</span>
-                            </div>
-                            @error('proficiency')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="years_experience" class="form-label">Years of Experience</label>
-                            <input type="number" class="form-control @error('years_experience') is-invalid @enderror" 
-                                   id="years_experience" name="years_experience" value="{{ old('years_experience', $skill->years_experience) }}" 
-                                   min="0" step="0.5" placeholder="e.g., 3">
-                            @error('years_experience')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="icon" class="form-label">Icon Class (Font Awesome)</label>
-                            <input type="text" class="form-control @error('icon') is-invalid @enderror" 
-                                   id="icon" name="icon" value="{{ old('icon', $skill->icon) }}" 
-                                   placeholder="e.g., fab fa-js, fas fa-code">
-                            @error('icon')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="text-muted">
-                                Find icons at <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a>
-                            </small>
-                            <div id="iconPreview" class="mt-2">
-                                @if($skill->icon)
-                                    <i class="{{ $skill->icon }} fa-3x"></i>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ route('admin.skills.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>Back
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>Update Skill
-                            </button>
-                        </div>
-                    </form>
+<div class="mb-6">
+    <div class="flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800 flex items-center">
+                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center mr-4">
+                    <i class="fas fa-edit text-white text-xl"></i>
                 </div>
+                Edit Skill
+            </h1>
+            <p class="text-gray-600 mt-2 ml-16">Update skill details</p>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-4xl">
+    <div class="group relative">
+        <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-teal-500 rounded-2xl transform group-hover:scale-105 transition duration-500 opacity-75 blur"></div>
+        <div class="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition duration-500">
+            <div class="bg-gradient-to-r from-green-50 to-teal-50 px-8 py-6 border-b border-green-100">
+                <h3 class="text-2xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-cogs text-green-600 mr-3"></i>
+                    Skill Information
+                </h3>
             </div>
+            
+            <form action="{{ route('admin.skills.update', $skill) }}" method="POST" class="p-8">
+                @csrf
+                @method('PUT')
+                
+                <div class="mb-6">
+                    <label for="category_id" class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fas fa-folder text-green-600 mr-2"></i>Category *
+                    </label>
+                    <select class="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-4 focus:ring-green-200 focus:border-green-500 transition @error('category_id') border-red-500 @enderror" 
+                            id="category_id" 
+                            name="category_id" 
+                            required>
+                        <option value="">Select a category</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" 
+                                    {{ old('category_id', $skill->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-6">
+                    <label for="name" class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fas fa-tag text-green-600 mr-2"></i>Skill Name *
+                    </label>
+                    <input type="text" 
+                           class="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-4 focus:ring-green-200 focus:border-green-500 transition @error('name') border-red-500 @enderror" 
+                           id="name" 
+                           name="name" 
+                           value="{{ old('name', $skill->name) }}" 
+                           required
+                           placeholder="e.g., JavaScript, Project Management, etc.">
+                    @error('name')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-6">
+                    <label for="proficiency" class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fas fa-chart-line text-green-600 mr-2"></i>Proficiency Level * (0-100)
+                    </label>
+                    <input type="range" 
+                           class="w-full h-3 bg-green-100 rounded-lg appearance-none cursor-pointer" 
+                           id="proficiency" 
+                           name="proficiency" 
+                           min="0" 
+                           max="100" 
+                           value="{{ old('proficiency', $skill->proficiency) }}" 
+                           oninput="document.getElementById('proficiencyValue').textContent = this.value + '%'">
+                    <div class="text-center mt-3">
+                        <span class="inline-block bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-2 rounded-xl font-bold text-lg" id="proficiencyValue">{{ old('proficiency', $skill->proficiency) }}%</span>
+                    </div>
+                    @error('proficiency')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-6">
+                    <label for="years_experience" class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fas fa-calendar text-green-600 mr-2"></i>Years of Experience
+                    </label>
+                    <input type="number" 
+                           class="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-4 focus:ring-green-200 focus:border-green-500 transition @error('years_experience') border-red-500 @enderror" 
+                           id="years_experience" 
+                           name="years_experience" 
+                           value="{{ old('years_experience', $skill->years_experience) }}" 
+                           min="0" 
+                           step="0.5" 
+                           placeholder="e.g., 3">
+                    @error('years_experience')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-6">
+                    <label for="icon" class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fas fa-icons text-green-600 mr-2"></i>Icon Class (Font Awesome)
+                    </label>
+                    <input type="text" 
+                           class="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-4 focus:ring-green-200 focus:border-green-500 transition @error('icon') border-red-500 @enderror" 
+                           id="icon" 
+                           name="icon" 
+                           value="{{ old('icon', $skill->icon) }}" 
+                           placeholder="e.g., fab fa-js, fas fa-code">
+                    @error('icon')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                    <p class="text-gray-500 text-sm mt-1 flex items-center">
+                        <i class="fas fa-info-circle mr-1"></i>Find icons at <a href="https://fontawesome.com/icons" target="_blank" class="text-green-600 hover:text-green-700 underline">fontawesome.com</a>
+                    </p>
+                    <div id="iconPreview" class="mt-3 p-4 bg-green-50 rounded-xl border-2 border-green-200 text-center">
+                        @if($skill->icon)
+                            <i class="{{ $skill->icon }} fa-3x text-green-600"></i>
+                        @else
+                            <span class="text-gray-400 text-sm">Icon preview will appear here</span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-6 border-t border-gray-200">
+                    <a href="{{ route('admin.skills.index') }}" class="group relative">
+                        <div class="absolute inset-0 bg-gray-400 rounded-xl blur group-hover:blur-lg transition"></div>
+                        <div class="relative bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-xl transition flex items-center font-semibold">
+                            <i class="fas fa-arrow-left mr-2"></i>Back
+                        </div>
+                    </a>
+                    <button type="submit" class="group relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl blur group-hover:blur-lg transition"></div>
+                        <div class="relative bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white px-6 py-3 rounded-xl transition flex items-center font-semibold">
+                            <i class="fas fa-save mr-2"></i>Update Skill
+                        </div>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -104,9 +154,9 @@
 document.getElementById('icon').addEventListener('input', function() {
     const iconPreview = document.getElementById('iconPreview');
     if (this.value) {
-        iconPreview.innerHTML = `<i class="${this.value} fa-3x"></i>`;
+        iconPreview.innerHTML = `<i class="${this.value} fa-3x text-green-600"></i>`;
     } else {
-        iconPreview.innerHTML = '';
+        iconPreview.innerHTML = '<span class="text-gray-400 text-sm">Icon preview will appear here</span>';
     }
 });
 </script>

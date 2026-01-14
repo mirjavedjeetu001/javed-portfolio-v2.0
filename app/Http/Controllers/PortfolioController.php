@@ -18,6 +18,7 @@ use App\Models\GalleryImage;
 use App\Models\SocialLink;
 use App\Models\ThemeSetting;
 use App\Models\Setting;
+use App\Models\MenuItem;
 
 class PortfolioController extends Controller
 {
@@ -27,6 +28,7 @@ class PortfolioController extends Controller
         $experiences = Experience::orderBy('order')->get();
         $skillCategories = SkillCategory::with('skills')->orderBy('order')->get();
         $projects = Project::orderBy('order')->get();
+        $featuredProjects = Project::where('is_featured', true)->orderBy('order')->take(3)->get();
         $education = Education::orderBy('order')->get();
         $certifications = Certification::orderBy('order')->get();
         $awards = Award::orderBy('date', 'desc')->get();
@@ -37,11 +39,12 @@ class PortfolioController extends Controller
         $socialLinks = SocialLink::where('is_active', true)->orderBy('order')->get();
         $theme = ThemeSetting::first();
         $settings = Setting::pluck('value', 'key');
+        $menuItems = MenuItem::where('is_visible', true)->orderBy('order')->get();
 
         return view('portfolio.index', compact(
-            'about', 'experiences', 'skillCategories', 'projects',
+            'about', 'experiences', 'skillCategories', 'projects', 'featuredProjects',
             'education', 'certifications', 'awards', 'activities', 'entrepreneurships',
-            'blogPosts', 'galleryImages', 'socialLinks', 'theme', 'settings'
+            'blogPosts', 'galleryImages', 'socialLinks', 'theme', 'settings', 'menuItems'
         ));
     }
     

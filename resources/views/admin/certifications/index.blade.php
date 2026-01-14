@@ -28,12 +28,12 @@
                     <div class="space-y-2 mb-4">
                         <div class="flex items-center text-sm text-gray-600">
                             <i class="fas fa-calendar-alt text-gray-400 w-5"></i>
-                            <span>Issued: {{ \Carbon\Carbon::parse($cert->issue_date)->format('M Y') }}</span>
+                            <span>Issued: {{ $cert->issue_date->format('M Y') }}</span>
                         </div>
                         @if($cert->expiry_date)
                             <div class="flex items-center text-sm text-gray-600">
                                 <i class="fas fa-calendar-check text-gray-400 w-5"></i>
-                                <span>Expires: {{ \Carbon\Carbon::parse($cert->expiry_date)->format('M Y') }}</span>
+                                <span>Expires: {{ $cert->expiry_date->format('M Y') }}</span>
                             </div>
                         @else
                             <div class="flex items-center text-sm">
@@ -55,7 +55,7 @@
                                 <i class="fas fa-external-link-alt mr-2"></i>View
                             </a>
                         @endif
-                        <form action="{{ route('admin.certifications.destroy', $cert) }}" method="POST" class="flex-1" onsubmit="return confirm('Delete this certification?');">
+                        <form action="{{ route('admin.certifications.destroy', $cert) }}" method="POST" class="flex-1" onsubmit="event.preventDefault(); showDeleteModal(this);">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm transition">

@@ -13,6 +13,15 @@
                 Projects Portfolio
             </h1>
             <p class="text-gray-600 mt-2 ml-16">Showcase your work and accomplishments</p>
+            @php
+                $featuredCount = $projects->where('is_featured', true)->count();
+            @endphp
+            @if($featuredCount > 0)
+                <div class="ml-16 mt-2 inline-flex items-center bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-800 px-4 py-2 rounded-lg text-sm font-semibold">
+                    <i class="fas fa-star text-yellow-500 mr-2"></i>
+                    {{ $featuredCount }} of 3 projects featured on homepage
+                </div>
+            @endif
         </div>
         <a href="{{ route('admin.projects.create') }}" class="group relative">
             <div class="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl blur group-hover:blur-lg transition"></div>
@@ -64,20 +73,28 @@
                     @endif
 
                     <div class="flex gap-2 mt-auto">
+                        <!-- Featured Toggle Button -->
+                        <form action="{{ route('admin.projects.toggle-featured', $project) }}" method="POST" class="flex-shrink-0">
+                            @csrf
+                            <button type="submit" class="@if($project->is_featured) bg-gradient-to-r from-yellow-400 to-orange-400 text-white @else bg-gradient-to-r from-gray-50 to-slate-50 text-gray-600 border-2 border-gray-200 @endif hover:scale-105 px-3 py-2 rounded-lg transition font-semibold shadow-md" title="@if($project->is_featured) Remove from Featured @else Add to Featured @endif">
+                                <i class="fas fa-star @if(!$project->is_featured) opacity-50 @endif"></i>
+                            </button>
+                        </form>
+                        
                         @if($project->demo_url)
-                            <a href="{{ $project->demo_url }}" target="_blank" class="bg-gradient-to-r from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 text-cyan-700 px-3 py-2 rounded-lg transition text-center font-semibold border-2 border-cyan-200 hover:border-cyan-400" title="View Demo">
+                            <a href="{{ $project->demo_url }}" target="_blank" class="bg-gradient-to-r from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 text-cyan-700 px-3 py-2 rounded-lg transition text-center font-semibold border-2 border-cyan-200 hover:border-cyan-400 flex-shrink-0" title="View Demo">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                         @endif
                         @if($project->github_url)
-                            <a href="{{ $project->github_url }}" target="_blank" class="bg-gradient-to-r from-gray-50 to-slate-50 hover:from-gray-100 hover:to-slate-100 text-gray-700 px-3 py-2 rounded-lg transition text-center font-semibold border-2 border-gray-200 hover:border-gray-400" title="GitHub">
+                            <a href="{{ $project->github_url }}" target="_blank" class="bg-gradient-to-r from-gray-50 to-slate-50 hover:from-gray-100 hover:to-slate-100 text-gray-700 px-3 py-2 rounded-lg transition text-center font-semibold border-2 border-gray-200 hover:border-gray-400 flex-shrink-0" title="GitHub">
                                 <i class="fab fa-github"></i>
                             </a>
                         @endif
                         <a href="{{ route('admin.projects.edit', $project) }}" class="flex-1 bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 px-4 py-2 rounded-lg transition text-center font-semibold border-2 border-orange-200 hover:border-orange-400">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this project?');">
+                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" onsubmit="event.preventDefault(); showDeleteModal(this);" class="flex-shrink-0">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 text-red-700 px-3 py-2 rounded-lg transition font-semibold border-2 border-red-200 hover:border-red-400">

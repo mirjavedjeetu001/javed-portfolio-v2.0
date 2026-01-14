@@ -76,7 +76,7 @@
                     <a href="{{ route('admin.education.edit', $edu) }}" class="flex-1 bg-white hover:bg-purple-50 text-purple-700 px-4 py-2 rounded-lg transition text-center font-semibold">
                         <i class="fas fa-edit mr-1"></i>Edit
                     </a>
-                    <form action="{{ route('admin.education.destroy', $edu) }}" method="POST" class="flex-1" onsubmit="return confirm('Are you sure you want to delete this education entry?');">
+                    <form action="{{ route('admin.education.destroy', $edu) }}" method="POST" class="flex-1" onsubmit="event.preventDefault(); showDeleteModal(this);">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="w-full bg-transparent hover:bg-white hover:bg-opacity-20 text-white px-4 py-2 rounded-lg transition font-semibold border-2 border-white">

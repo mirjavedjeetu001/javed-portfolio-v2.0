@@ -77,7 +77,7 @@
                     <a href="{{ route('admin.experiences.edit', $experience) }}" class="flex-1 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 text-blue-700 px-4 py-2 rounded-lg transition text-center font-semibold border-2 border-blue-200 hover:border-blue-400">
                         <i class="fas fa-edit mr-1"></i>Edit
                     </a>
-                    <form action="{{ route('admin.experiences.destroy', $experience) }}" method="POST" class="flex-1" onsubmit="return confirm('Are you sure you want to delete this experience?');">
+                    <form action="{{ route('admin.experiences.destroy', $experience) }}" method="POST" class="flex-1" onsubmit="event.preventDefault(); showDeleteModal(this);">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="w-full bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 text-red-700 px-4 py-2 rounded-lg transition font-semibold border-2 border-red-200 hover:border-red-400">

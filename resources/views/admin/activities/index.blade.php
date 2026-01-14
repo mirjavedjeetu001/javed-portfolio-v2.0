@@ -33,9 +33,9 @@
                                 <div class="flex items-center text-sm text-gray-600 mb-3">
                                     <i class="fas fa-calendar-alt text-gray-400 mr-2"></i>
                                     <span>
-                                        {{ $activity->start_date ? \Carbon\Carbon::parse($activity->start_date)->format('M Y') : 'N/A' }}
+                                        {{ $activity->start_date->format('M Y') }}
                                         -
-                                        {{ $activity->is_current ? 'Present' : ($activity->end_date ? \Carbon\Carbon::parse($activity->end_date)->format('M Y') : 'N/A') }}
+                                        {{ $activity->is_current ? 'Present' : ($activity->end_date ? $activity->end_date->format('M Y') : 'N/A') }}
                                     </span>
                                 </div>
                                 @if($activity->description)
@@ -43,13 +43,15 @@
                                 @endif
                             </div>
                         </div>
-                        <form action="{{ route('admin.activities.destroy', $activity) }}" method="POST" onsubmit="return confirm('Delete this activity?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm transition ml-4">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
+                        <div class="flex gap-2">
+                            <form action="{{ route('admin.activities.destroy', $activity) }}" method="POST" onsubmit="event.preventDefault(); showDeleteModal(this);">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm transition">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             @endforeach
