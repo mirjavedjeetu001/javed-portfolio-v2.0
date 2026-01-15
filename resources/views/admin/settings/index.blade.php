@@ -203,46 +203,6 @@
                     </div>
                 </div>
 
-                <!-- SEO & Analytics Section -->
-                <div class="mb-8 border-t-2 border-gray-100 pt-8">
-                    <h4 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                        <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center mr-3">
-                            <i class="fas fa-chart-line text-white text-sm"></i>
-                        </div>
-                        SEO & Analytics
-                    </h4>
-                    <div class="grid grid-cols-1 gap-6">
-                        <div class="group">
-                            <label for="meta_description" class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                                <i class="fas fa-file-alt text-indigo-500 mr-2"></i>Meta Description (SEO)
-                            </label>
-                            <textarea class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-indigo-200 focus:border-indigo-500 transition duration-300 group-hover:border-indigo-300 resize-none" id="meta_description" name="meta_description" rows="2" 
-                                      placeholder="A brief description for search engines">{{ old('meta_description', $settings->where('key', 'meta_description')->first()->value ?? '') }}</textarea>
-                            <p class="mt-2 text-sm text-gray-600 flex items-center"><i class="fas fa-info-circle text-indigo-500 mr-2"></i>Appears in search engine results (150-160 characters recommended)</p>
-                        </div>
-
-                        <div class="group">
-                            <label for="meta_keywords" class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                                <i class="fas fa-tags text-purple-500 mr-2"></i>Meta Keywords (SEO)
-                            </label>
-                            <input type="text" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition duration-300 group-hover:border-purple-300" id="meta_keywords" name="meta_keywords" 
-                                   value="{{ old('meta_keywords', $settings->where('key', 'meta_keywords')->first()->value ?? '') }}" 
-                                   placeholder="developer, portfolio, web design, etc.">
-                            <p class="mt-2 text-sm text-gray-600 flex items-center"><i class="fas fa-info-circle text-purple-500 mr-2"></i>Comma-separated keywords</p>
-                        </div>
-
-                        <div class="group">
-                            <label for="google_analytics_id" class="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                                <i class="fab fa-google text-blue-600 mr-2"></i>Google Analytics ID
-                            </label>
-                            <input type="text" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition duration-300 group-hover:border-blue-300" id="google_analytics_id" name="google_analytics_id" 
-                                   value="{{ old('google_analytics_id', $settings->where('key', 'google_analytics_id')->first()->value ?? '') }}" 
-                                   placeholder="G-XXXXXXXXXX">
-                            <p class="mt-2 text-sm text-gray-600 flex items-center"><i class="fas fa-info-circle text-blue-500 mr-2"></i>Optional: For tracking website visitors</p>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="flex justify-end space-x-4">
                     <button type="submit" class="group relative">
                         <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl blur group-hover:blur-lg transition"></div>

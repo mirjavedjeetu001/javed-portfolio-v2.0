@@ -121,5 +121,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('database/import', [\App\Http\Controllers\Admin\DatabaseController::class, 'import'])->name('database.import');
     Route::post('database/restore/{filename}', [\App\Http\Controllers\Admin\DatabaseController::class, 'restore'])->name('database.restore');
     Route::delete('database/delete/{filename}', [\App\Http\Controllers\Admin\DatabaseController::class, 'delete'])->name('database.delete');
+    
+    // SEO & Analytics Management
+    Route::prefix('seo')->name('seo.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\SeoAnalyticsController::class, 'index'])->name('index');
+        Route::get('/settings', [\App\Http\Controllers\Admin\SeoAnalyticsController::class, 'seoSettings'])->name('settings');
+        Route::post('/settings', [\App\Http\Controllers\Admin\SeoAnalyticsController::class, 'updateSeoSettings'])->name('settings.update');
+        Route::get('/analytics', [\App\Http\Controllers\Admin\SeoAnalyticsController::class, 'analyticsSettings'])->name('analytics');
+        Route::post('/analytics', [\App\Http\Controllers\Admin\SeoAnalyticsController::class, 'updateAnalyticsSettings'])->name('analytics.update');
+        Route::get('/adsense', [\App\Http\Controllers\Admin\SeoAnalyticsController::class, 'adsenseSettings'])->name('adsense');
+        Route::post('/adsense', [\App\Http\Controllers\Admin\SeoAnalyticsController::class, 'updateAdsenseSettings'])->name('adsense.update');
+    });
 });
     

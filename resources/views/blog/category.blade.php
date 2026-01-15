@@ -99,7 +99,7 @@
                             <a href="{{ route('blog.show', $blog->slug) }}" class="group">
                                 <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-2 h-full flex flex-col">
                                     @if($blog->featured_image)
-                                        <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="{{ $blog->title }}" class="w-full h-56 object-cover">
+                                        <img src="{{ asset($blog->featured_image) }}" alt="{{ $blog->title }}" class="w-full h-56 object-cover">
                                     @else
                                         <div class="w-full h-56 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                                             <i class="fas fa-blog text-8xl text-white/50"></i>

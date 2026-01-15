@@ -105,7 +105,7 @@
                                class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition @error('start_date') border-red-500 @enderror" 
                                id="start_date" 
                                name="start_date" 
-                               value="{{ old('start_date', $education->start_date) }}" 
+                               value="{{ old('start_date', $education->start_date ? $education->start_date->format('Y-m-d') : '') }}" 
                                required>
                         @error('start_date')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -120,7 +120,7 @@
                                class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition @error('end_date') border-red-500 @enderror" 
                                id="end_date" 
                                name="end_date" 
-                               value="{{ old('end_date', $education->end_date) }}">
+                               value="{{ old('end_date', $education->end_date ? $education->end_date->format('Y-m-d') : '') }}">
                         @error('end_date')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror

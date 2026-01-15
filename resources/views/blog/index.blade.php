@@ -9,8 +9,14 @@
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $about->image) }}">
     @endif
     
+    <!-- SEO Meta Tags -->
+    @include('partials.seo-meta')
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Analytics & AdSense Scripts -->
+    @include('partials.analytics-scripts')
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
@@ -100,7 +106,7 @@
                                 <a href="{{ route('blog.show', $featured->slug) }}" class="group">
                                     <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-2">
                                         @if($featured->featured_image)
-                                            <img src="{{ asset('storage/' . $featured->featured_image) }}" alt="{{ $featured->title }}" class="w-full h-48 object-cover">
+                                            <img src="{{ asset($featured->featured_image) }}" alt="{{ $featured->title }}" class="w-full h-48 object-cover">
                                         @else
                                             <div class="w-full h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                                                 <i class="fas fa-blog text-6xl text-white/50"></i>
@@ -131,7 +137,7 @@
                             <a href="{{ route('blog.show', $blog->slug) }}" class="group">
                                 <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-2 h-full flex flex-col">
                                     @if($blog->featured_image)
-                                        <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="{{ $blog->title }}" class="w-full h-56 object-cover">
+                                        <img src="{{ asset($blog->featured_image) }}" alt="{{ $blog->title }}" class="w-full h-56 object-cover">
                                     @else
                                         <div class="w-full h-56 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                                             <i class="fas fa-blog text-8xl text-white/50"></i>

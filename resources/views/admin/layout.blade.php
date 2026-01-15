@@ -109,6 +109,26 @@
                     <i class="fas fa-database mr-3"></i>
                     Database Backup
                 </a>
+                
+                <!-- SEO & Analytics Section -->
+                <div class="px-6 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">SEO & Analytics</div>
+                <a href="{{ route('admin.seo.index') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.seo.index') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    Analytics Dashboard
+                </a>
+                <a href="{{ route('admin.seo.settings') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.seo.settings') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fas fa-search mr-3"></i>
+                    SEO Settings
+                </a>
+                <a href="{{ route('admin.seo.analytics') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.seo.analytics') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fab fa-google mr-3"></i>
+                    Google Analytics
+                </a>
+                <a href="{{ route('admin.seo.adsense') }}" class="flex items-center px-6 py-3 hover:bg-gray-800 {{ request()->routeIs('admin.seo.adsense') ? 'bg-gray-800 border-l-4 border-blue-500' : '' }}">
+                    <i class="fas fa-ad mr-3"></i>
+                    AdSense Settings
+                </a>
+                
                 <a href="{{ route('home') }}" target="_blank" class="flex items-center px-6 py-3 hover:bg-gray-800 mt-4 border-t border-gray-700">
                     <i class="fas fa-external-link-alt mr-3"></i>
                     View Portfolio

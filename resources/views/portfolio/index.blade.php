@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $about->name ?? 'Portfolio' }} - {{ $about->title ?? 'Professional Portfolio' }}</title>
     
+    {{-- Dynamic SEO Meta Tags --}}
+    @include('partials.seo-meta', ['pageTitle' => ($about->name ?? 'Portfolio') . ' - ' . ($about->title ?? 'Professional Portfolio')])
+    
     <!-- Favicon - Dynamic Profile Picture -->
     @if($about && $about->image)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $about->image) }}">
@@ -13,6 +16,9 @@
     @else
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @endif
+    
+    {{-- Google Analytics & AdSense --}}
+    @include('partials.analytics-scripts')
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -401,7 +407,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="gradient-bg text-white" style="position: relative; overflow: hidden;">
+    <section id="home" class="gradient-bg text-white" style="position: relative; overflow: visible;">
         @php
             $enableAnimation = $settings->where('key', 'enable_hero_animation')->first()->value ?? '1';
         @endphp
@@ -464,7 +470,7 @@
                 </div>
                 @endif
                 
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
                     <a href="#contact" class="bg-white text-blue-600 px-6 sm:px-8 py-3 rounded-full font-semibold hover:shadow-lg transition text-center">
                         Get In Touch
                     </a>
@@ -621,6 +627,9 @@
                                 </div>
                                 <div class="flex-1">
                                     <h3 class="text-xl font-bold text-gray-800 mb-1 group-hover:text-purple-600 transition">{{ $edu->degree }}</h3>
+                                    @if($edu->field_of_study)
+                                        <p class="text-gray-600 text-sm mb-1"><i class="fas fa-book mr-2 text-purple-500"></i>{{ $edu->field_of_study }}</p>
+                                    @endif
                                     <p class="text-lg font-semibold text-purple-600 flex items-center">
                                         <i class="fas fa-university mr-2"></i>{{ $edu->institution }}
                                     </p>
@@ -994,7 +1003,7 @@
                         <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full flex flex-col">
                             @if($blog->featured_image)
                                 <div class="h-56 overflow-hidden">
-                                    <img src="{{ asset('storage/' . $blog->featured_image) }}" 
+                                    <img src="{{ asset($blog->featured_image) }}" 
                                          alt="{{ $blog->title }}" 
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
@@ -1076,22 +1085,22 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
                         <div>
                             <label class="block text-white mb-2 text-sm sm:text-base">Full Name</label>
-                            <input type="text" name="name" required class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="Your Name">
+                            <input type="text" name="name" required inputmode="text" autocomplete="name" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="Your Name">
                         </div>
                         <div>
                             <label class="block text-white mb-2 text-sm sm:text-base">Email Address</label>
-                            <input type="email" name="email" required class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="your@email.com">
+                            <input type="email" name="email" required inputmode="email" autocomplete="email" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="your@email.com">
                         </div>
                     </div>
                     
                     <div class="mb-4 sm:mb-6">
                         <label class="block text-white mb-2 text-sm sm:text-base">Subject</label>
-                        <input type="text" name="subject" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="Subject">
+                        <input type="text" name="subject" inputmode="text" autocomplete="off" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="Subject">
                     </div>
                     
                     <div class="mb-4 sm:mb-6">
                         <label class="block text-white mb-2 text-sm sm:text-base">Message</label>
-                        <textarea name="message" required rows="5" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="Your message..."></textarea>
+                        <textarea name="message" required rows="5" inputmode="text" class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base" placeholder="Your message..."></textarea>
                     </div>
                     
                     <button type="submit" class="w-full bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition text-sm sm:text-base">

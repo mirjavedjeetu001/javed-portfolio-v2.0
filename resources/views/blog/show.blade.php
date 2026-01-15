@@ -9,8 +9,14 @@
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $about->image) }}">
     @endif
     
+    <!-- SEO Meta Tags -->
+    @include('partials.seo-meta', ['pageTitle' => $blog->title, 'pageDescription' => $blog->excerpt, 'pageImage' => $blog->featured_image ? asset($blog->featured_image) : null])
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Analytics & AdSense Scripts -->
+    @include('partials.analytics-scripts')
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
@@ -74,12 +80,15 @@
                 <div class="lg:col-span-2">
                     <article class="bg-white rounded-xl shadow-lg overflow-hidden">
                         @if($blog->featured_image)
-                            <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="{{ $blog->title }}" class="w-full h-96 object-cover">
+                            <img src="{{ asset($blog->featured_image) }}" alt="{{ $blog->title }}" class="w-full h-96 object-cover">
                         @endif
                         
                         <div class="p-8 prose">
                             {!! $blog->content !!}
                         </div>
+                        
+                        <!-- AdSense In-Article Ad -->
+                        @include('partials.adsense', ['position' => 'in_article'])
 
                         <!-- Like Button -->
                         <div class="px-8 py-6 border-t flex items-center gap-4">
@@ -101,7 +110,7 @@
                                     <input type="text" name="name" placeholder="Your Name" required class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                     <input type="email" name="email" placeholder="Your Email" required class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 </div>
-                                <textarea name="content" placeholder="Share your thoughts..." rows="4" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
+                                <textarea name="comment" placeholder="Share your thoughts..." rows="4" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
                                 <button type="submit" class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:shadow-lg transition">Post Comment</button>
                             </form>
 
@@ -115,7 +124,7 @@
                                                 <p class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</p>
                                             </div>
                                         </div>
-                                        <p class="text-gray-700">{{ $comment->content }}</p>
+                                        <p class="text-gray-700">{{ $comment->comment }}</p>
 
                                         <!-- Nested Replies -->
                                         @if($comment->replies->count() > 0)
@@ -126,7 +135,7 @@
                                                             <p class="font-semibold text-sm">{{ $reply->name }}</p>
                                                             <p class="text-xs text-gray-500">{{ $reply->created_at->diffForHumans() }}</p>
                                                         </div>
-                                                        <p class="text-gray-700 text-sm mt-2">{{ $reply->content }}</p>
+                                                        <p class="text-gray-700 text-sm mt-2">{{ $reply->comment }}</p>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -225,7 +234,7 @@
                 body: JSON.stringify({
                     name: form.name.value,
                     email: form.email.value,
-                    content: form.content.value
+                    comment: form.comment.value
                 })
             })
             .then(r => r.json())

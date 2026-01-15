@@ -158,7 +158,7 @@ class BlogController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:255',
-            'content' => 'required|string|max:1000',
+            'comment' => 'required|string|max:1000',
             'parent_id' => 'nullable|exists:blog_comments,id'
         ]);
         
@@ -166,7 +166,7 @@ class BlogController extends Controller
             'blog_id' => $blog->id,
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'content' => $validated['content'],
+            'comment' => $validated['comment'],
             'parent_id' => $validated['parent_id'] ?? null,
             'is_approved' => false
         ]);
