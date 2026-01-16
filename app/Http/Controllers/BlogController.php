@@ -10,6 +10,7 @@ use App\Models\About;
 use App\Models\ThemeSetting;
 use App\Models\MenuItem;
 use App\Models\SocialLink;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -24,6 +25,7 @@ class BlogController extends Controller
             'theme' => ThemeSetting::first(),
             'menuItems' => MenuItem::where('is_visible', true)->orderBy('order')->get(),
             'socialLinks' => SocialLink::where('is_active', true)->orderBy('order')->get(),
+            'settings' => Setting::pluck('value', 'key'),
         ];
     }
 

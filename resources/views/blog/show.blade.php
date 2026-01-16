@@ -194,7 +194,7 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8 mt-16">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-sm sm:text-base">&copy; {{ date('Y') }} {{ $about->name ?? 'Portfolio' }}. All Rights Reserved.</p>
+            <p class="text-sm sm:text-base">{!! $settings['footer_text'] ?? '&copy; ' . date('Y') . ' ' . ($about->name ?? 'Portfolio') . '. All Rights Reserved.' !!}</p>
             <div class="flex justify-center space-x-6 mt-4">
                 @foreach($socialLinks as $link)
                     <a href="{{ $link->url }}" target="_blank" class="text-white hover:text-primary transition">

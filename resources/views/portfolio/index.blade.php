@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $about->name ?? 'Portfolio' }} - {{ $about->title ?? 'Professional Portfolio' }}</title>
     
+    {{-- Preconnect to CDNs for faster loading --}}
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    {{-- Preload critical resources --}}
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" as="style">
+    
     {{-- Dynamic SEO Meta Tags --}}
     @include('partials.seo-meta', ['pageTitle' => ($about->name ?? 'Portfolio') . ' - ' . ($about->title ?? 'Professional Portfolio')])
     
@@ -20,12 +30,16 @@
     {{-- Google Analytics & AdSense --}}
     @include('partials.analytics-scripts')
     
+    {{-- Load Google Fonts first --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap">
+    
+    {{-- Load Tailwind CSS --}}
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
-        
         body {
             font-family: 'Inter', sans-serif;
         }
@@ -1114,7 +1128,7 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-6 sm:py-8">
         <div class="container mx-auto px-4 sm:px-6 text-center">
-            <p class="text-sm sm:text-base">&copy; {{ date('Y') }} {{ $about->name ?? 'Portfolio' }}. All Rights Reserved.</p>
+            <p class="text-sm sm:text-base">{!! $settings['footer_text'] ?? '&copy; ' . date('Y') . ' ' . ($about->name ?? 'Portfolio') . '. All Rights Reserved.' !!}</p>
             @if($about && ($about->facebook || $about->twitter || $about->linkedin || $about->github || $about->instagram || $about->youtube))
             <div class="flex justify-center flex-wrap space-x-4 sm:space-x-6 mt-4">
                 @if($about->facebook)
